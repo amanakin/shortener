@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option go_package="./;api";
+package api;
+
+service Shortener {
+  rpc Shorten(ShortenRequest) returns (ShortenResponse) {}
+  rpc Resolve(ResolveRequest) returns (ResolveResponse) {}
+
+}
+
+message ShortenRequest {
+  string url = 1;
+}
+
+message ShortenResponse {
+  string original = 1;
+  string shortened = 2;
+  bool created = 3;
+}
+
+message ResolveRequest {
+  string shortened = 1;
+}
+
+message ResolveResponse {
+  string original = 1;
+}

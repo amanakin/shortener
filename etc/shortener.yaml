@@ -1,0 +1,23 @@
+shortener:
+  alphabet: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
+  short_len: 10
+  default_scheme: "https"
+  allowed_schemes:
+    - "http"
+    - "https"
+http:
+  enabled: true
+  host: 0.0.0.0
+  port: 8080
+  rate_limit: 100
+grpc:
+  enabled: true
+  host: 0.0.0.0
+  port: 8081
+postgres:
+  enabled: true # false to use in-memory storage
+  host: postgresdb
+  port: 5432
+  user: dev
+  password: dev_password
+  dbname: shortener
