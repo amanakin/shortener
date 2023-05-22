@@ -1,3 +1,5 @@
+[![Shortener test](https://github.com/amanakin/shortener/actions/workflows/test.yaml/badge.svg?branch=master)](https://github.com/amanakin/shortener/actions/workflows/test.yaml)
+
 ## Yet Another URL Shortener
 
 ### Description
