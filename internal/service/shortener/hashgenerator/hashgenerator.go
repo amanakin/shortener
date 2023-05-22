@@ -2,30 +2,27 @@ package hashgenerator
 
 import (
 	"crypto/sha256"
-	"hash"
 	"math/big"
 	"strings"
 )
 
 // HashGenerator implements more secure Generator interface.
 type HashGenerator struct {
-	hash     hash.Hash
 	alphabet []byte
 	shortLen int
 }
 
 func New(alphabet []byte, shortLen int) *HashGenerator {
 	return &HashGenerator{
-		hash:     sha256.New(),
 		alphabet: alphabet,
 		shortLen: shortLen,
 	}
 }
 
 func (g *HashGenerator) Generate(input string) string {
-	g.hash.Reset()
-	g.hash.Write([]byte(input))
-	hashed := g.hash.Sum(nil)
+	hash := sha256.New()
+	hash.Write([]byte(input))
+	hashed := hash.Sum(nil)
 
 	base := big.NewInt(int64(len(g.alphabet)))
 	num := big.NewInt(0).SetBytes(hashed)
