@@ -1,4 +1,4 @@
-name: Shortener test
+name: test
 on: [push]
 
 jobs:
