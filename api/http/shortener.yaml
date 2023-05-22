@@ -1,0 +1,91 @@
+---
+openapi: 3.0.1
+info:
+  title: Shortener
+  description: Shortener HTTP API documentation
+  version: "0.1"
+servers:
+- url: /
+paths:
+  /getlink/{shortlink}:
+    get:
+      summary: Get original URL from shortened
+      parameters:
+      - name: shortlink
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLinkResponse'
+        "404":
+          description: Not Found
+        "5XX":
+          description: Internal error
+  /setlink:
+    post:
+      summary: Set original URL and get shortened
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetLinkRequest'
+            examples:
+              "0":
+                value: |-
+                  {
+                      "url":  "google.com"
+                  }
+              "1":
+                value: |-
+                  {
+                      "url":  "https://some.site.com/some/path#anchor"
+                  }
+      responses:
+        "200":
+          description: Shortened URL was found for requested URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetLinkResponse'
+        "201":
+          description: Shortened URL was created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetLinkResponse'
+        "400":
+          description: Invalid URL passed
+        "5XX":
+          description: Internal error
+components:
+  schemas:
+    SetLinkResponse:
+      type: object
+      properties:
+        original:
+          type: string
+        shortened:
+          type: string
+        created:
+          type: boolean
+    SetLinkRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          description: "URL of original link. \nAllowed schemas are http, https. Host must be non-empty.\nIf no schema provided, will be added https.\n"
+    GetLinkResponse:
+      type: object
+      properties:
+        original:
+          type: string
+          description: Original URL
+
