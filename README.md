@@ -5,7 +5,7 @@
 ### Description
 This is a simple URL shortener service.\
 It provides HTTP and gRPC API.\
-It uses PostgreSQL/in-memory as a storage.\
+It uses PostgreSQL/in-memory as a storage.
 
 ### Build/Deploy
 Most convenient way to deploy is to use Docker.
