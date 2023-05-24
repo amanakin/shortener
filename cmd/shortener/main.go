@@ -108,6 +108,6 @@ func main() {
 		repo = maprepo.New()
 	}
 
-	shortenerService := shortener.New(repo, cfg.ShortenerConfig)
+	shortenerService := shortener.NewService(repo, cfg.ShortenerConfig)
 	StartServers(logger, shortenerService, cfg)
 }

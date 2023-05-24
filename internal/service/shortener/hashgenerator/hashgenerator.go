@@ -7,6 +7,7 @@ import (
 )
 
 // HashGenerator implements more secure Generator interface.
+// Translates SHA256 hash if input to alphabet based string.
 type HashGenerator struct {
 	alphabet []byte
 	shortLen int
