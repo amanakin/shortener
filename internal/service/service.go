@@ -16,7 +16,7 @@ var (
 
 type Shortener interface {
 	// Shorten creates short URL from origin URL, and returns if already created
-	Shorten(ctx context.Context, url string) (domain.Link, bool, error)
+	Shorten(ctx context.Context, original string) (domain.Link, bool, error)
 	// Resolve gets origin URL from previously shortened
-	Resolve(ctx context.Context, short string) (string, error)
+	Resolve(ctx context.Context, shortened string) (string, error)
 }

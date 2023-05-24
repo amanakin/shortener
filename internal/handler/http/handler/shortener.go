@@ -76,6 +76,9 @@ func (h *ShortenerHandler) SetLink(w http.ResponseWriter, r *http.Request) error
 		return fmt.Errorf("shorten: %w", err)
 	}
 
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	resp := SetLinkResponse{
 		Original:  link.OriginalURL,
@@ -114,6 +117,9 @@ func (h *ShortenerHandler) GetLink(w http.ResponseWriter, r *http.Request) error
 		http.Error(w, "Internal error", http.StatusInternalServerError)
 		return fmt.Errorf("resolve: %w", err)
 	}
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
 
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	resp := GetLinkResponse{

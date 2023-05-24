@@ -22,6 +22,7 @@ const (
 	defaultPort      = 8080
 	defaultRateLimit = 100
 	defaultReadLimit = 1024 * 1024
+	defaultTimeout   = 5 * time.Second
 )
 
 type Config struct {
@@ -30,8 +31,9 @@ type Config struct {
 	Host string `yaml:"host"`
 	Port int    `yaml:"port"`
 
-	RateLimit int   `yaml:"rate_limit"`
-	ReadLimit int64 `yaml:"read_limit"`
+	RateLimit int           `yaml:"rate_limit"`
+	ReadLimit int64         `yaml:"read_limit"`
+	Timeout   time.Duration `yaml:"timeout"`
 }
 
 func DefaultConfig() Config {
@@ -41,6 +43,7 @@ func DefaultConfig() Config {
 		Port:      defaultPort,
 		RateLimit: defaultRateLimit,
 		ReadLimit: defaultReadLimit,
+		Timeout:   defaultTimeout,
 	}
 }
 
@@ -103,6 +106,7 @@ func (s *Server) ListenAndServe(ctx context.Context) error {
 	router.Use(middleware.RealIP) // set req.RemoteAddr from 'X-Real-IP' or 'X-Forwarded-For'
 	router.Use(loggerMiddleware(s.logger))
 	router.Use(httprate.LimitAll(s.config.RateLimit, time.Second))
+	router.Use(middleware.Timeout(s.config.Timeout))
 	router.Use(middleware.Recoverer)
 
 	router.NotFound(func(w http.ResponseWriter, r *http.Request) {
