@@ -14,11 +14,11 @@ services:
     ports:
       - 8080:8080
       - 8081:8081
-    restart: on-failure
     depends_on:
       - postgresdb
     networks:
       - learning
+    restart: on-failure
 
   postgresdb:
     image: postgres:alpine
@@ -31,6 +31,7 @@ services:
       - ./sql/schema.sql:/docker-entrypoint-initdb.d/schema.sql
     networks:
       - learning
+    restart: on-failure
 
 networks:
   learning:
